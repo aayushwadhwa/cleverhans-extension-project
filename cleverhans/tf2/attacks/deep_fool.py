@@ -45,7 +45,7 @@ def deep_fool_attack(model, input_img_batch, num_classes=10, overshoot=0.02, max
       
     #   grad_orig = tape.gradient(loss_value, x)
 
-      grad_orig = compute_gradient(model, loss_func, x, f_batch_labels[i][0])
+      grad_orig = compute_gradient(model, loss_func, x, f_batch_labels[i][0], False)
 
       for j in range(1, num_classes):
         
@@ -54,7 +54,7 @@ def deep_fool_attack(model, input_img_batch, num_classes=10, overshoot=0.02, max
         #   fs = model(x)
         #   loss_value = loss_func(fs, f_batch_labels[i], j)
         # curr_grad = tape.gradient(loss_value, x)
-        curr_grad = compute_gradient(model, loss_func, x, f_batch_labels[i][j])
+        curr_grad = compute_gradient(model, loss_func, x, f_batch_labels[i][j], False)
         
         w_k = curr_grad - grad_orig
         f_k = (fs[0, f_batch_labels[i][j]] - fs[0, f_batch_labels[i][0]]).numpy()
