@@ -22,7 +22,9 @@ def deep_fool_attack(model, input_img_batch, num_classes=10, overshoot=0.02, max
 
   i, itr = 0, 0
   k = labels.copy()
-  
+  x = tf.Variable(backup[i])
+  x = tf.expand_dims(x, axis=0)
+  fs = model(x)
 
 #   def loss_func(logits, I, k):
 #     return logits[0, I[k]]
@@ -48,7 +50,6 @@ def deep_fool_attack(model, input_img_batch, num_classes=10, overshoot=0.02, max
       grad_orig = compute_gradient(model, loss_func, x, f_batch_labels[i][0], False)
 
       for j in range(1, num_classes):
-        
         # with tf.GradientTape() as tape:
         #   tape.watch(x)
         #   fs = model(x)
